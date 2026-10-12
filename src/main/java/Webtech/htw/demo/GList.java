@@ -1,12 +1,14 @@
 package Webtech.htw.demo;
 
-public class Entry {
+public class GList {
 
     private String name;
-        private boolean done;
+    private boolean done;
+    private int anzahl;
 
-        public Entry(String name) {
+        public GList(String name, int anzahl) {
             this.name = name;
+            this.anzahl = anzahl;
         }
 
         public String getName() {
@@ -24,5 +26,9 @@ public class Entry {
         public void setDone(boolean done) {
             this.done = done;
         }
+
+        public int getAnzahl(){ return anzahl;}
+
+        public void setAnzahl(int anzahl){ this.anzahl=anzahl;}
     }
 

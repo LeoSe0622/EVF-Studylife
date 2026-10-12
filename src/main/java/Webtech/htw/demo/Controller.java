@@ -8,8 +8,8 @@ import java.util.List;
 public class Controller {
 
     @GetMapping("/")
-    public List<Entry> index() {
-        return List.of(new Entry("M1"), new Entry("M2"),new Entry("M3"),new Entry("M4"));
+    public List<GList> index() {
+        return List.of(new GList("Milch", 1), new GList("Hühnchen", 4),new GList("Reis", 3),new GList("Honig", 1));
     }
 
     }
