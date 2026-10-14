@@ -6,29 +6,35 @@ public class GList {
     private boolean done;
     private int anzahl;
 
-        public GList(String name, int anzahl) {
-            this.name = name;
-            this.anzahl = anzahl;
-        }
+    public GList(String name, int anzahl) {
+        this.name = name;
+        this.anzahl = anzahl;
+    }
 
-        public String getName() {
-            return name;
-        }
+    public String getName() {
 
-        public void setName(String name) {
-            this.name = name;
-        }
+        return name;
+    }
 
-        public boolean isDone() {
-            return done;
-        }
+    public void setName(String name) {
 
-        public void setDone(boolean done) {
-            this.done = done;
-        }
+        this.name = name;
+    }
 
-        public int getAnzahl(){ return anzahl;}
+    public boolean getDone() {
+        return done;
+    }
 
-        public void setAnzahl(int anzahl){ this.anzahl=anzahl;}
+    public void isDone(boolean done) {
+        this.done = done;
+    }
+
+    public int getAnzahl() {
+        return anzahl;
+    }
+
+    public void setAnzahl(int anzahl) {
+        this.anzahl = anzahl;
+    }
     }
 
