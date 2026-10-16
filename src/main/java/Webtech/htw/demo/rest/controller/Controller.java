@@ -1,4 +1,4 @@
-package Webtech.htw.demo;
+package Webtech.htw.demo.rest.controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;

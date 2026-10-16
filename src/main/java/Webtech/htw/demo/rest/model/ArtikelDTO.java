@@ -1,6 +1,6 @@
-package Webtech.htw.demo;
+package Webtech.htw.demo.rest.model;
 
-public class Artikel {
+public class ArtikelDTO {
      private String name;
 
      public void Artikel(String name){
