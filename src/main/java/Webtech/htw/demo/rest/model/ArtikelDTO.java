@@ -2,8 +2,9 @@ package Webtech.htw.demo.rest.model;
 
 public class ArtikelDTO {
      private String name;
+     private int id;
 
-     public void Artikel(String name){
+     public void ArtikelDTO(String name){
          this.name = name;
      }
 

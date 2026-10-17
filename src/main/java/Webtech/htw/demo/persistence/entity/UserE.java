@@ -20,6 +20,4 @@ public class UserE {
         GList.add(artikel);
         return GList;
     }
-
-    public
 }
