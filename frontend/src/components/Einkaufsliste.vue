@@ -2,7 +2,7 @@
 type Artikel = { name: string }
 type User = { name: string; email: string; einkaufsliste: Artikel[] }
 
-const user: User = {
+const user = {
   name: 'Demo-User',
   email: 'demo@example.com',
   einkaufsliste: [{ name: 'Milch' }, { name: 'Eier' }, { name: 'Spaghetti' }, { name: 'Tomaten' }],
@@ -16,5 +16,4 @@ const user: User = {
       {{ artikel.name }}
     </li>
   </ul>
-  <p v-if="user.einkaufsliste.length === 0">Die Liste ist leer.</p>
 </template>
