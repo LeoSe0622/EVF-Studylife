@@ -1,18 +1,29 @@
 <script setup lang="ts">
-type Artikel = { name: string }
-type User = { name: string; email: string; einkaufsliste: Artikel[] }
 
-const user = {
-  name: 'Demo-User',
-  email: 'demo@example.com',
-  einkaufsliste: [{ name: 'Milch' }, { name: 'Eier' }, { name: 'Spaghetti' }, { name: 'Tomaten' }],
+const items = {string: name}
+
+function loadThings () {
+  console.log('Klick angekommen')
+  const endpoint = 'http://localhost:8080/'
+  const requestOptions = {
+  method: 'GET',
+  redirect: 'follow'
+  }
+
+  fetch(endpoint, requestOptions)
+  .then(response => response.json())
+  .then(result => result. forEach(thing => {
+  this.items.push(thing)
+  }))
+  .catch(error => console.log('error',error))
 }
 </script>
 
 <template>
-  <h2>Einkaufsliste von {{ user.name }}</h2>
+  <h2>Einkaufsliste</h2>
+  <button @click="loadThings()">Artikel laden</button>
   <ul>
-    <li v-for="(artikel, index) in user.einkaufsliste" :key="index">
+    <li v-for="(artikel, index) in items" :key="index">
       {{ artikel.name }}
     </li>
   </ul>
