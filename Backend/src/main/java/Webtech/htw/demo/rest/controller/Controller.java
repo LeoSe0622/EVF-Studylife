@@ -9,9 +9,9 @@ import java.util.List;
 @RestController
 public class Controller {
 
-    @GetMapping("/")
-    public List<UserDTO> index() {
-        UserDTO u1 = new UserDTO("Leo", "Leo123@", "123456789");
+    @GetMapping("/data")
+    public List<ArtikelDTO> index() {
+        ArtikelDTO u1 = new ArtikelDTO("Leo");
         return List.of(u1);
     }
 

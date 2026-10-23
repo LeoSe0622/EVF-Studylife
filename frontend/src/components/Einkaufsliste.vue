@@ -1,10 +1,18 @@
 <script setup lang="ts">
+import { reactive } from 'vue'
 
-const items = {string: name}
+type Artikel = {
+  name: string
+}
+
+const items = reactive<Artikel[]>([])
+
+
+
 
 function loadThings () {
   console.log('Klick angekommen')
-  const endpoint = 'http://localhost:8080/'
+  const endpoint = 'http://localhost:8080/data'
   const requestOptions = {
   method: 'GET',
   redirect: 'follow'
@@ -12,8 +20,9 @@ function loadThings () {
 
   fetch(endpoint, requestOptions)
   .then(response => response.json())
-  .then(result => result. forEach(thing => {
-  this.items.push(thing)
+  .then(result => result.forEach(thing => {
+  items.push(thing)
+    console.log(items);
   }))
   .catch(error => console.log('error',error))
 }
