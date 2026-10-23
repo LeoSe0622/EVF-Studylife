@@ -9,7 +9,7 @@ import java.util.List;
 @RestController
 public class Controller {
 
-    @GetMapping("/data")
+    @GetMapping("/")
     public List<ArtikelDTO> index() {
         ArtikelDTO u1 = new ArtikelDTO("Leo");
         return List.of(u1);
