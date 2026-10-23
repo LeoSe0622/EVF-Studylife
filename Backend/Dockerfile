@@ -2,7 +2,6 @@
 FROM gradle:jdk25 AS build
 COPY --chown=gradle:gradle . /home/gradle/src
 WORKDIR /home/gradle/src
-RUN ls -la && find . -maxdepth 3 -name "*.gradle*"
 RUN gradle build --no-daemon
 
 LABEL org.name="EVF-Studylife"
