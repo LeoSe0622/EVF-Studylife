@@ -7,6 +7,8 @@ type Artikel = {
 }
 
 const items = ref<Artikel[]>([])
+const baseUrl = import.meta.env.VITE_APP_BACKEND_BASE_URL
+const response = await axios.get(`${baseUrl}/`)
 
 function requestArtikel(): void {
   axios
