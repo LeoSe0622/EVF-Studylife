@@ -2,7 +2,7 @@ package Webtech.htw.demo.persistence.entity;
 
 import java.util.List;
 
-@E
+
 public class UserE {
 
     private String name;
