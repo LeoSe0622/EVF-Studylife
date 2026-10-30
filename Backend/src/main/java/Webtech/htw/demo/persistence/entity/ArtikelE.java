@@ -3,12 +3,15 @@ package Webtech.htw.demo.persistence.entity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
-import org.springframework.data.annotation.Id;
+import jakarta.persistence.Id;
 
 @Entity
 public class ArtikelE {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
      private String name;
 
      public ArtikelE(){}
@@ -16,7 +19,15 @@ public class ArtikelE {
          this.name = name;
      }
 
-     public String getName(){
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName(){
          return this.name;
      }
 }
