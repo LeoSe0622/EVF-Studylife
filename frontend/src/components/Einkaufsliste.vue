@@ -14,7 +14,7 @@ const neuerArtikel = ref('')
 
 function requestArtikel(): void {
   axios
-    .get<Artikel[]>(`${baseUrl}/`)
+    .get<Artikel[]>(`${baseUrl}/artikel`)
     .then((response) => (items.value = response.data))
     .catch((error) => console.log(error))
 }

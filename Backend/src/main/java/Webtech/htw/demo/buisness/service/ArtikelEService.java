@@ -6,6 +6,9 @@ import Webtech.htw.demo.persistence.repo.ArtikelERepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class ArtikelEService {
 
@@ -19,4 +22,10 @@ public class ArtikelEService {
     public ArtikelE get(Long id){
         return repo.findById(id).orElseThrow(() -> new RuntimeException());
     }
+    public List<ArtikelE> getAll(){
+        List<ArtikelE> alle = new ArrayList<>();
+        for (ArtikelE artikel : repo.findAll()){
+            alle.add(artikel);
+        }
+        return alle;}
 }
