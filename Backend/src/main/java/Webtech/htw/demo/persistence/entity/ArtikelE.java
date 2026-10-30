@@ -15,7 +15,7 @@ public class ArtikelE {
      private String name;
 
      public ArtikelE(){}
-     public void Artikel(String name){
+     public ArtikelE(String name){
          this.name = name;
      }
 
