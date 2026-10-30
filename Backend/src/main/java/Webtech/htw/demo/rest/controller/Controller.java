@@ -11,7 +11,7 @@ public class Controller {
 
     @GetMapping("/")
     public List<ArtikelDTO> index() {
-        ArtikelDTO u1 = new ArtikelDTO("Leo");
+        ArtikelDTO u1 = new ArtikelDTO("Hallo");
         return List.of(u1);
     }
 
