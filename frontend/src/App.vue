@@ -9,7 +9,9 @@ import HelloWorld from './components/HelloWorld.vue'
       <HelloWorld msg="EVF-Studylife" />
       <nav>
         <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
+        <RouterLink to="/Dashboard">Dashboard</RouterLink>
+        <RouterLink to="/Stocklist">Vorratsliste</RouterLink>
+        <RouterLink to="/Fokus">Fokusmode</RouterLink>
       </nav>
     </div>
 
