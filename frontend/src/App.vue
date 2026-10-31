@@ -4,6 +4,8 @@ import HelloWorld from './components/HelloWorld.vue'
 </script>
 
 <template>
+  <head> EVF-Studylife </head>
+
   <header>
     <div class="wrapper">
       <HelloWorld msg="EVF-Studylife" />
