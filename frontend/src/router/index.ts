@@ -27,6 +27,12 @@ const router = createRouter({
       path: '/Fokus',
       name: 'Fokus',
       component: () => import('../views/Fokus.vue'),
+    },
+
+    {
+      path: '/GList',
+      name: 'List',
+      component: () => import('../views/GroßList.vue')
     }
   ],
 })

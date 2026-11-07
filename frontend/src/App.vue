@@ -14,6 +14,7 @@ import HelloWorld from './components/HelloWorld.vue'
         <RouterLink to="/Dashboard">Dashboard</RouterLink>
         <RouterLink to="/Stocklist">Vorratsliste</RouterLink>
         <RouterLink to="/Fokus">Fokusmode</RouterLink>
+        <RouterLink to="/GList">Einkaufsliste</RouterLink>
       </nav>
     </div>
 
