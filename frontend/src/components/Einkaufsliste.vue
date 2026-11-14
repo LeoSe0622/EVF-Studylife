@@ -48,7 +48,14 @@ function abhaken(id: number): void {
   <ul>
     <li v-for="e in items" :key="e.id">
       {{ e.menge }}× {{ e.artikel.name }}
-      <button @click="abhaken(e.id)">Gekauft</button>
+      <button class="b" @click="abhaken(e.id)">Gekauft</button>
     </li>
   </ul>
+
+
 </template>
+
+<style>
+
+
+</style>

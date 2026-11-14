@@ -7,9 +7,12 @@ import Webtech.htw.demo.persistence.repo.ArtikelERepo;
 import Webtech.htw.demo.persistence.repo.ListenEintragERepo;
 import Webtech.htw.demo.persistence.repo.UserERepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 
 import java.util.List;
 
+@Service
 public class ListenEintragEService {
     @Autowired
     ListenEintragERepo repo;
