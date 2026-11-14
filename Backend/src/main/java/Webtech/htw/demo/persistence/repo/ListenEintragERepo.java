@@ -6,5 +6,5 @@ import Webtech.htw.demo.persistence.entity.ListenEintragE;
 import java.util.List;
 
 public interface ListenEintragERepo extends CrudRepository<ListenEintragE, Long> {
-    List<ListenEintragE> findByUserIdAndListe(Long userId, String liste);
+    List<ListenEintragE> findByListe(String liste);
 }

@@ -14,19 +14,19 @@ public class ListenEintragEController {
     @Autowired
     ListenEintragEService service;
 
-    @GetMapping("/user/{id}/einkaufsliste")
-    public List<ListenEintragE> getEinkaufsliste(@PathVariable Long id) {
-        return service.getListe(id, "EINKAUF");
+    @GetMapping("/einkaufsliste")
+    public List<ListenEintragE> getEinkaufsliste() {
+        return service.getListe("EINKAUF");
     }
 
-    @GetMapping("/user/{id}/stockliste")
-    public List<ListenEintragE> getStockliste(@PathVariable Long id) {
-        return service.getListe(id, "STOCK");
+    @GetMapping("/stockliste")
+    public List<ListenEintragE> getStockliste() {
+        return service.getListe("STOCK");
     }
 
-    @PostMapping("/user/{id}/einkaufsliste")
-    public ListenEintragE hinzufuegen(@PathVariable Long id, @RequestBody EintragDTO dto) {
-        return service.hinzufuegen(id, dto.getName(), dto.getMenge());
+    @PostMapping("/einkaufsliste")
+    public ListenEintragE hinzufuegen(@RequestBody EintragDTO dto) {
+        return service.hinzufuegen(dto.getName(), dto.getMenge());
     }
 
     @PutMapping("/eintrag/{id}/abhaken")

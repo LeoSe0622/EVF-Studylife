@@ -2,10 +2,8 @@ package Webtech.htw.demo.buisness.service;
 
 import Webtech.htw.demo.persistence.entity.ArtikelE;
 import Webtech.htw.demo.persistence.entity.ListenEintragE;
-import Webtech.htw.demo.persistence.entity.UserE;
 import Webtech.htw.demo.persistence.repo.ArtikelERepo;
 import Webtech.htw.demo.persistence.repo.ListenEintragERepo;
-import Webtech.htw.demo.persistence.repo.UserERepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,22 +16,18 @@ public class ListenEintragEService {
     ListenEintragERepo repo;
     @Autowired
     ArtikelERepo artikelRepo;
-    @Autowired
-    UserERepo userRepo;
 
     // Alle Einträge einer Liste holen ("EINKAUF" oder "STOCK")
-    public List<ListenEintragE> getListe(Long userId, String liste) {
-        return repo.findByUserIdAndListe(userId, liste);
+    public List<ListenEintragE> getListe(String liste) {
+        return repo.findByListe(liste);
     }
 
     // Artikel auf die Einkaufsliste setzen
-    public ListenEintragE hinzufuegen(Long userId, String name, int menge) {
-        UserE user = userRepo.findById(userId).get();
-
+    public ListenEintragE hinzufuegen(String name, int menge) {
         ArtikelE artikel = artikelRepo.save(new ArtikelE(name));
 
         // 3. Eintrag auf der Einkaufsliste anlegen
-        ListenEintragE eintrag = new ListenEintragE(user, artikel, menge, "EINKAUF");
+        ListenEintragE eintrag = new ListenEintragE(artikel, menge, "EINKAUF");
         return (ListenEintragE) repo.save(eintrag);
     }
 

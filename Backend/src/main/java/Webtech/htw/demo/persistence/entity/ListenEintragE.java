@@ -1,6 +1,5 @@
 package Webtech.htw.demo.persistence.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 @Entity
@@ -10,11 +9,6 @@ public class ListenEintragE {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private UserE user;
-
 
     @ManyToOne
     @JoinColumn(name = "artikel_id")
@@ -29,21 +23,13 @@ public class ListenEintragE {
         this.artikel = artikel;
     }
 
-    public void setUser(UserE user) {
-        this.user = user;
-    }
-
-
-    public ListenEintragE(UserE user, ArtikelE artikel, int menge, String liste) {
-        this.user = user;
+    public ListenEintragE(ArtikelE artikel, int menge, String liste) {
         this.artikel = artikel;
         this.menge = menge;
         this.liste = liste;
     }
 
     public Long getId() { return id; }
-
-    public UserE getUser() { return user; }
 
     public ArtikelE getArtikel() { return artikel; }
 
