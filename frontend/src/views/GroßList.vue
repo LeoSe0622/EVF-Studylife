@@ -4,7 +4,7 @@ import Einkaufsliste from "@/components/Einkaufsliste.vue";
 </script>
 
 <template>
-  <Einkaufsliste />
+<Einkaufsliste />
 </template>
 
 <style scoped>

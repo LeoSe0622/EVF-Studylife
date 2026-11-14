@@ -30,13 +30,10 @@ function addArtikel(): void{
 </script>
 
 <template>
+
   <h2>Einkaufsliste</h2>
   <input v-model="neuerArtikel" placeholder="Artikelname" />
   <button @click="addArtikel()">Hinzufügen</button>
   <button @click="requestArtikel()">Artikel laden</button>
-  <ul>
-    <li v-for="(artikel, index) in items" :key="index">
-      {{ artikel.name }}
-    </li>
-  </ul>
+
 </template>

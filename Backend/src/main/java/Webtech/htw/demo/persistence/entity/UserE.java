@@ -19,9 +19,6 @@ public class UserE {
     private String email;
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
-    // TODO Einkaufsliste und Stock-Liste (@ManyToMany)
-    //private List<ArtikelE> GList;
-    //private List<ArtikelE> SList;
 
     public UserE(){}
 
@@ -30,11 +27,6 @@ public class UserE {
         this.name = name;
         this.password = password;
     }
-
-    //public List<ArtikelE> addGList(ArtikelE artikel){
-    //    GList.add(artikel);
-    //    return GList;
-    //}
 
     public Long getId() {
         return id;

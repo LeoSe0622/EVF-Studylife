@@ -11,10 +11,10 @@ import HelloWorld from './components/HelloWorld.vue'
       <HelloWorld msg="EVF-Studylife" />
       <nav>
         <RouterLink to="/">Home</RouterLink>
+        <RouterLink to="/GList">Einkaufsliste</RouterLink>
         <RouterLink to="/Dashboard">Dashboard</RouterLink>
         <RouterLink to="/Stocklist">Vorratsliste</RouterLink>
         <RouterLink to="/Fokus">Fokusmode</RouterLink>
-        <RouterLink to="/GList">Einkaufsliste</RouterLink>
       </nav>
     </div>
 
