@@ -12,7 +12,7 @@ const budget = ref(0)        // aktuell gespeichertes Budget
 const input = ref('')        // Text im Eingabefeld
 const error = ref('')        // Fehlermeldung für den User
 
-// Budget vom Backend holen
+// Budget vom Backend holen.
 function requestBudget(): void {
   axios
     .get<BudgetResponse>(`${baseUrl}/api/budget`)
@@ -63,7 +63,7 @@ onMounted(requestBudget)
       v-model="input"
       type="text"
       inputmode="decimal"
-      placeholder="Neues Budget, z. B. 250.50"
+      placeholder="Neues Budget"
       @keyup.enter="saveBudget"
     />
     <button @click="saveBudget">Speichern</button>
