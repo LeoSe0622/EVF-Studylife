@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class BudgetEService {
 
-    private double amount = 0.0;
     private static final Long id = 1L;
     @Autowired
     BudgetRepository repo;
@@ -22,8 +21,6 @@ public class BudgetEService {
             budget.setAmount(0);
             budget = repo.save(budget);
         }
-
-        amount = budget.getAmount();   // globale Variable aktualisieren
         return budget;
     }
 
@@ -31,12 +28,10 @@ public class BudgetEService {
     public Budget save(double neuerAmount) {
         if (neuerAmount < 0) {
             throw new IllegalArgumentException("Betrag darf nicht negativ sein");
-        } else {
-            amount = neuerAmount;
         }
 
         Budget budget = get();
-        budget.setAmount(amount);
+        budget.setAmount(neuerAmount);
         return repo.save(budget);
     }
 
