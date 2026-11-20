@@ -103,7 +103,7 @@ input:checked + span {
 }
 
 .span{
-  font-size: 120%;
+  font-size: 400%;
 }
 
 </style>
