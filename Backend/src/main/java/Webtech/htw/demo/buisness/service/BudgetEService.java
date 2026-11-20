@@ -1,7 +1,8 @@
 package Webtech.htw.demo.buisness.service;
 
-import htw.demo.persistence.entity.Budget;
-import htw.demo.persistence.repo.BudgetRepository;
+import Webtech.htw.demo.persistence.entity.Budget;
+import Webtech.htw.demo.persistence.repo.BudgetRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -18,7 +19,6 @@ public class BudgetEService {
 
         if (budget == null) {
             budget = new Budget();
-            budget.setId(id);
             budget.setAmount(0);
             budget = repo.save(budget);
         }
@@ -40,7 +40,7 @@ public class BudgetEService {
         return repo.save(budget);
     }
 
-    public userEinkauf (){
+    public Budget einkauf (){
 
     }
 

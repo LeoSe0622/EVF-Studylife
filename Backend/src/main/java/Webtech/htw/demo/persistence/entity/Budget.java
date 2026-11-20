@@ -15,9 +15,9 @@ public class Budget {
     private Long userId;
 
     // BigDecimal statt double: keine Rundungsfehler bei Geldbeträgen
-    private BigDecimal amount = BigDecimal.ZERO;
+    private double amount = 0.0;
 
-    private Budget() {
+    public Budget() {
         // von JPA benötigt
     }
 
@@ -29,11 +29,11 @@ public class Budget {
         return userId;
     }
 
-    public BigDecimal getAmount() {
+    public double getAmount() {
         return amount;
     }
 
-    public void setAmount(BigDecimal amount) {
+    public void setAmount(double amount) {
         this.amount = amount;
     }
 }
