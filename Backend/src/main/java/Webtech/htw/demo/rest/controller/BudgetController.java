@@ -36,7 +36,7 @@ public class BudgetController {
 
     // PUT /api/budget  Body: { "amount": 250.50 }
     // Legt das Budget an oder überschreibt es, falls schon eins existiert
-    @PutMapping
+    @PutMapping("/api/budget")
     public BudgetDto setBudget(@Valid @RequestBody BudgetDto request) {
         Long userId = currentUserId();
 
