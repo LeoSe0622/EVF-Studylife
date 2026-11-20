@@ -18,7 +18,7 @@ public class BudgetEService {
         Budget budget = repo.findById(id).orElse(null);
 
         if (budget == null) {
-            budget = new Budget();
+            budget = new Budget(id);
             budget.setAmount(0);
             budget = repo.save(budget);
         }
@@ -40,12 +40,10 @@ public class BudgetEService {
         return repo.save(budget);
     }
 
+    // Kosten eines Einkaufs vom Budget abziehen
     public Budget einkauf (double userAmount){
-        if (userAmount > amount){
-            //system.out.println("Achtung! Dein Budget ist im Minus!");
-        }
-        amount = amount - userAmount;
-        budget.setAmount(amount);
+        Budget budget = get();
+        budget.setAmount(budget.getAmount() - userAmount);
         return repo.save(budget);
     }
 }

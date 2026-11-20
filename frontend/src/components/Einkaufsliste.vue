@@ -14,6 +14,12 @@ const baseUrl = import.meta.env.VITE_APP_BACKEND_BASE_URL
 const neuerArtikel = ref('')
 const menge = ref(1)
 
+//ref damit sich ändern kann, Array zum speichern der abgehackten ids
+const gekauft = ref<number[]>([])   // IDs der abgehakten Einträge
+
+const zeigeKosten = ref(false)   // Kosten-Eingabe sichtbar?
+const kosten = ref(0)            // eingegebener Betrag
+
 function requestArtikel(): void {
   axios
     .get<Eintrag[]>(`${baseUrl}/einkaufsliste`)
@@ -35,6 +41,29 @@ function abhaken(id: number): void {
     .catch((error) => console.log(error))
 }
 
+function einkaufAbschließen(): void{
+  axios
+    .put(`${baseUrl}/einkaufsliste/abschliessen`, gekauft.value)
+    .then(() => {
+      // gekauft const leeren
+      gekauft.value = []
+      //aktikel neu ausgeben da ja jetzt abgeschlossen
+      requestArtikel()
+      zeigeKosten.value = true   // jetzt nach den Kosten fragen
+    })
+    .catch((error) => console.log(error))
+}
+
+function kostenAbziehen(): void {
+  axios
+    .put(`${baseUrl}/api/budget/ausgabe`, { amount: kosten.value })
+    .then(() => {
+      kosten.value = 0
+      zeigeKosten.value = false   // Eingabe wieder ausblenden
+    })
+    .catch((error) => console.log(error))
+}
+
 </script>
 
 <template>
@@ -47,15 +76,30 @@ function abhaken(id: number): void {
 
   <ul>
     <li v-for="e in items" :key="e.id">
-      {{ e.menge }}× {{ e.artikel.name }}
-      <button class="b" @click="abhaken(e.id)">Gekauft</button>
+      <input type="checkbox" :value="e.id" v-model="gekauft" /> <!-- in die const binden-->
+      <span>{{ e.menge }}× {{ e.artikel.name }}</span> <!-- span um zu sagen was durchgestrichen werden soll-->
+
     </li>
   </ul>
+  <!-- um einkauf abzuschließen-->
+  <button @click="einkaufAbschließen()">Einkauf abschließen</button>
+
+
+  <!-- erscheint erst nach dem Abschließen -->
+  <div v-if="zeigeKosten">
+    <p>Was hat der Einkauf gekostet?</p>
+    <input v-model.number="kosten" type="number" />
+    <button @click="kostenAbziehen()">Abziehen</button>
+  </div>
 
 
 </template>
 
 <style>
-
+/* für alle input elemente die in span stehen*/
+input:checked + span {
+  text-decoration: line-through;
+  opacity: 0.5;
+}
 
 </style>

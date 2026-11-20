@@ -33,4 +33,9 @@ public class ListenEintragEController {
     public void abhaken(@PathVariable Long id) {
         service.abhaken(id);
     }
+
+    @PutMapping("/einkaufsliste/abschliessen")
+    public void einkaufAbschliessen(@RequestBody List<Long> ids) {
+        service.abschließen(ids);
+    }
 }

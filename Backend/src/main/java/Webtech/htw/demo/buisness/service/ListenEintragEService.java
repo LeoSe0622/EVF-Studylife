@@ -38,4 +38,10 @@ public class ListenEintragEService {
         repo.save(eintrag);
 
     }
+
+    public void abschließen(List<Long> ids){
+        for (Long id : ids){
+            abhaken(id);
+        }
+    }
 }
