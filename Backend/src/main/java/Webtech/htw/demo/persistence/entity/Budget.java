@@ -37,3 +37,4 @@ public class Budget {
         this.amount = amount;
     }
 }
+

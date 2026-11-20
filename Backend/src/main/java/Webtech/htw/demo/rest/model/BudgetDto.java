@@ -13,3 +13,4 @@ public record BudgetDto(
         BigDecimal amount
 ) {
 }
+
