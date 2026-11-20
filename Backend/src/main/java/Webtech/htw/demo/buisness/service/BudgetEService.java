@@ -14,11 +14,11 @@ public class BudgetEService {
 
     // Budget holen. Gibt es noch keins, wird eins mit 0 angelegt.
     public Budget get() {
-        Budget budget = repo.findById(BUDGET_ID).orElse(null);
+        Budget budget = repo.findById(id).orElse(null);
 
         if (budget == null) {
             budget = new Budget();
-            budget.setId(BUDGET_ID);
+            budget.setId(id);
             budget.setAmount(0);
             budget = repo.save(budget);
         }
