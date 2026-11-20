@@ -45,5 +45,6 @@ public class BudgetEService {
         Budget budget = get();
         budget.setAmount(budget.getAmount() - userAmount);
         return repo.save(budget);
+
     }
 }
