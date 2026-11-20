@@ -102,4 +102,8 @@ input:checked + span {
   opacity: 0.5;
 }
 
+.span{
+  font-size: 120%;
+}
+
 </style>
