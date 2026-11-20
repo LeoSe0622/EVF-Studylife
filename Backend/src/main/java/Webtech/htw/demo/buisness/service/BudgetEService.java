@@ -40,8 +40,12 @@ public class BudgetEService {
         return repo.save(budget);
     }
 
-    public Budget einkauf (){
-
+    public Budget einkauf (double userAmount){
+        if (userAmount > amount){
+            //system.out.println("Achtung! Dein Budget ist im Minus!");
+        }
+        amount = amount - userAmount;
+        budget.setAmount(amount);
+        return repo.save(budget);
     }
-
 }
