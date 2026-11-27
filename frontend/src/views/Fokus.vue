@@ -8,61 +8,15 @@ type Todo = {
   erledigt: boolean
 }
 
-type Timer = {
-  id: number
-  name: string
-  minuten: number
-}
-
 const baseUrl = import.meta.env.VITE_APP_BACKEND_BASE_URL
 
-// ---------- To-Dos ----------
+// =====================================================
+// To-Dos
+// =====================================================
 const todos = ref<Todo[]>([])
 const neuesTodo = ref('')
 
-// ---------- Timer-Liste ----------
-const timerListe = ref<Timer[]>([])
-const neuerTimerName = ref('')
-const neueMinuten = ref(25)
-
-// ---------- Countdown ----------
-const startSeconds = ref(25 * 60)   // ref, damit man den Timer wechseln kann
-const seconds = ref(startSeconds.value)
-const running = ref(false)
-let interval: number | undefined
-
-const display = computed(() => {
-  const m = String(Math.floor(seconds.value / 60)).padStart(2, '0')
-  const s = String(seconds.value % 60).padStart(2, '0')
-  return `${m}:${s}`
-})
-
-function toggle() {
-  if (running.value) {
-    clearInterval(interval)
-    running.value = false
-    return
-  }
-  if (seconds.value === 0) seconds.value = startSeconds.value
-  running.value = true
-  interval = setInterval(() => {
-    if (seconds.value > 0) {
-      seconds.value--
-    } else {
-      clearInterval(interval)
-      running.value = false
-    }
-  }, 1000)
-}
-
-// gespeicherten Timer auswählen -> Countdown neu setzen
-function timerWaehlen(timer: Timer): void {
-  if (running.value) return   // während er läuft nicht wechseln
-  startSeconds.value = timer.minuten * 60
-  seconds.value = startSeconds.value
-}
-
-// ---------- To-Do Requests ----------
+// alle To-Dos vom Backend holen
 function requestTodos(): void {
   axios
     .get<Todo[]>(`${baseUrl}/fokus/todos`)
@@ -70,17 +24,19 @@ function requestTodos(): void {
     .catch((error) => console.log(error))
 }
 
+// neues To-Do speichern und danach die Liste neu laden
 function addTodo(): void {
   if (neuesTodo.value.trim() === '') return
   axios
     .post(`${baseUrl}/fokus/todos`, { text: neuesTodo.value })
-    .then((response) => {
-      todos.value.push(response.data)
+    .then(() => {
       neuesTodo.value = ''
+      requestTodos()
     })
     .catch((error) => console.log(error))
 }
 
+// To-Do abhaken und danach die Liste neu laden
 function abhaken(id: number): void {
   axios
     .put(`${baseUrl}/fokus/todos/${id}/abhaken`)
@@ -88,6 +44,7 @@ function abhaken(id: number): void {
     .catch((error) => console.log(error))
 }
 
+// To-Do löschen und danach die Liste neu laden
 function todoLoeschen(id: number): void {
   axios
     .delete(`${baseUrl}/fokus/todos/${id}`)
@@ -95,48 +52,60 @@ function todoLoeschen(id: number): void {
     .catch((error) => console.log(error))
 }
 
-// ---------- Timer Requests ----------
-function requestTimer(): void {
-  axios
-    .get<Timer[]>(`${baseUrl}/fokus/timer`)
-    .then((response) => (timerListe.value = response.data))
-    .catch((error) => console.log(error))
-}
+// =====================================================
+// Timer (fest auf 25 Minuten)
+// =====================================================
+const startSekunden = 25 * 60
+const seconds = ref(startSekunden)
+const running = ref(false)
+let interval: number | undefined
 
-function addTimer(): void {
-  if (neuerTimerName.value.trim() === '' || neueMinuten.value <= 0) return
-  axios
-    .post(`${baseUrl}/fokus/timer`, { name: neuerTimerName.value, minuten: neueMinuten.value })
-    .then((response) => {
-      timerListe.value.push(response.data)
-      neuerTimerName.value = ''
-      neueMinuten.value = 25
-    })
-    .catch((error) => console.log(error))
-}
-
-function timerLoeschen(id: number): void {
-  axios
-    .delete(`${baseUrl}/fokus/timer/${id}`)
-    .then(() => requestTimer())
-    .catch((error) => console.log(error))
-}
-
-// beim Öffnen der Seite direkt alles laden
-onMounted(() => {
-  requestTodos()
-  requestTimer()
+// macht aus z. B. 1500 Sekunden die Anzeige "25:00"
+const display = computed(() => {
+  const m = String(Math.floor(seconds.value / 60)).padStart(2, '0')
+  const s = String(seconds.value % 60).padStart(2, '0')
+  return `${m}:${s}`
 })
 
+// Start / Pause
+function toggle(): void {
+  if (running.value) {
+    clearInterval(interval)
+    running.value = false
+  } else {
+    running.value = true
+    // jede Sekunde eins runterzählen, bei 0 anhalten
+    interval = setInterval(() => {
+      if (seconds.value > 0) {
+        seconds.value--
+      } else {
+        clearInterval(interval)
+        running.value = false
+      }
+    }, 1000)
+  }
+}
+
+// Timer anhalten und wieder auf 25:00 setzen
+function reset(): void {
+  clearInterval(interval)
+  running.value = false
+  seconds.value = startSekunden
+}
+
+// beim Öffnen der Seite die To-Dos laden
+onMounted(() => requestTodos())
+
+// beim Verlassen der Seite den Timer stoppen
 onUnmounted(() => clearInterval(interval))
 </script>
 
 <template>
   <div class="page">
+    <!-- linke Seite: To-Do-Liste -->
     <div class="todos">
       <h1>To-Dos</h1>
 
-      <!-- neuen einzelnen Eintrag anlegen -->
       <div class="eingabe">
         <input v-model="neuesTodo" placeholder="Neue Aufgabe" @keyup.enter="addTodo()" />
         <button class="start-btn" @click="addTodo()">Hinzufügen</button>
@@ -152,35 +121,24 @@ onUnmounted(() => clearInterval(interval))
       </ul>
     </div>
 
+    <!-- rechte Seite: Timer -->
     <div class="timer-area">
       <div class="timer-circle">
         <span class="timer-label">Timer</span>
         <span class="timer-time">{{ display }}</span>
       </div>
-      <button class="start-btn" @click="toggle">
-        {{ running ? 'Pause' : 'Start' }}
-      </button>
 
-      <!-- gespeicherte Timer zum Auswählen -->
-      <div class="timer-liste">
-        <div v-for="tm in timerListe" :key="tm.id" class="timer-chip">
-          <span @click="timerWaehlen(tm)">{{ tm.name }} · {{ tm.minuten }} min</span>
-          <button class="loeschen" @click="timerLoeschen(tm.id)">✕</button>
-        </div>
-      </div>
-
-      <!-- neuen Timer festlegen -->
-      <div class="eingabe">
-        <input v-model="neuerTimerName" placeholder="Name" />
-        <input v-model.number="neueMinuten" type="number" min="1" class="minuten" />
-        <button class="start-btn" @click="addTimer()">Speichern</button>
+      <div class="buttons">
+        <button class="start-btn" @click="toggle()">
+          {{ running ? 'Pause' : 'Start' }}
+        </button>
+        <button class="start-btn" @click="reset()">Reset</button>
       </div>
     </div>
   </div>
 </template>
 
 <style scoped>
-/* ----- bestehende Styles bleiben gleich ----- */
 .page {
   background-color: #121212;
   color: #ffffff;
@@ -191,12 +149,27 @@ onUnmounted(() => clearInterval(interval))
   display: flex;
   gap: 40px;
 }
+
+/* ----- To-Dos ----- */
 .todos {
   flex: 1;
 }
 h1 {
   font-size: 3em;
   margin: 0 0 30px 0;
+}
+.eingabe {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+.eingabe input {
+  background-color: #1e1e1e;
+  color: #ffffff;
+  border: 1px solid #555555;
+  border-radius: 20px;
+  padding: 10px 16px;
+  font-size: 1em;
 }
 .todo-list {
   list-style: none;
@@ -218,6 +191,29 @@ h1 {
   flex-shrink: 0;
   cursor: pointer;
 }
+.check.checked {
+  background-color: #555555;
+}
+.todo-text {
+  flex: 1;
+}
+/* erledigte Einträge durchstreichen */
+.todo-text.done {
+  text-decoration: line-through;
+  opacity: 0.5;
+}
+.loeschen {
+  background: none;
+  border: none;
+  color: #555555;
+  cursor: pointer;
+  font-size: 1em;
+}
+.loeschen:hover {
+  color: #ffffff;
+}
+
+/* ----- Timer ----- */
 .timer-area {
   display: flex;
   flex-direction: column;
@@ -244,6 +240,10 @@ h1 {
   font-weight: bold;
   margin-top: 6px;
 }
+.buttons {
+  display: flex;
+  gap: 10px;
+}
 .start-btn {
   background-color: #2a2a2a;
   color: #ffffff;
@@ -255,61 +255,5 @@ h1 {
 }
 .start-btn:hover {
   background-color: #3a3a3a;
-}
-
-/* ----- neu ----- */
-.check.checked {
-  background-color: #555555;
-}
-.todo-text {
-  flex: 1;
-}
-/* erledigte Einträge durchstreichen wie in der Einkaufsliste */
-.todo-text.done {
-  text-decoration: line-through;
-  opacity: 0.5;
-}
-.eingabe {
-  display: flex;
-  gap: 10px;
-  margin-bottom: 20px;
-}
-.eingabe input {
-  background-color: #1e1e1e;
-  color: #ffffff;
-  border: 1px solid #555555;
-  border-radius: 20px;
-  padding: 10px 16px;
-  font-size: 1em;
-}
-.eingabe .minuten {
-  width: 70px;
-}
-.loeschen {
-  background: none;
-  border: none;
-  color: #555555;
-  cursor: pointer;
-  font-size: 1em;
-}
-.loeschen:hover {
-  color: #ffffff;
-}
-.timer-liste {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  justify-content: center;
-  max-width: 320px;
-}
-.timer-chip {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  background-color: #1e1e1e;
-  border: 1px solid #555555;
-  border-radius: 20px;
-  padding: 6px 12px;
-  cursor: pointer;
 }
 </style>

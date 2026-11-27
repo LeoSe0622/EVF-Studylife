@@ -46,3 +46,35 @@ const schritte = [
     </section>
   </main>
 </template>
+<style>
+body {
+  margin: 0;
+}
+main {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+nav {
+  display: flex;
+  gap: 20px;
+  padding: 20px;
+  background-color: #1f4d3a;
+}
+.button {
+  background-color: #1f4d3a;
+  padding: 10px 20px;
+  border-radius: 6px;
+  text-decoration: none;
+}
+.karte {
+  border: 1px solid gray;
+  padding: 20px;
+  margin-bottom: 20px;
+  border-radius: 10px;
+}
+nav a {
+  color: white;
+}
+</style>
