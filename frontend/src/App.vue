@@ -9,7 +9,7 @@ import HelloWorld from './components/HelloWorld.vue'
   <header>
     <div class="wrapper">
       <HelloWorld msg="EVF-Studylife" />
-      <nav>
+      <nav v-if="$route.path !== '/'">
         <RouterLink to="/">Home</RouterLink>
         <RouterLink to="/GList">Einkaufsliste</RouterLink>
         <RouterLink to="/Dashboard">Dashboard</RouterLink>
